@@ -40,6 +40,8 @@ public class ConnectionManager {
      * @throws IOException If an IOException occurred while setting up the connection.
      */
     public URLConnection createServerConnection (String host, int port, String postfix, boolean trustAllCertificates) throws IOException {
+        if (postfix == null)
+            postfix = "";
         return createServerConnection("https://" + host + ":" + port + "/" + postfix, trustAllCertificates);
     }
 
