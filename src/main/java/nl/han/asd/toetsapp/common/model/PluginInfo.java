@@ -3,7 +3,8 @@ package nl.han.asd.toetsapp.common.model;
 import org.json.JSONObject;
 
 public class PluginInfo implements JsonModel {
-
+    private static final String NAME = "name";
+    private static final String VERSION = "version";
     private String name;
     private String version;
 
@@ -12,6 +13,10 @@ public class PluginInfo implements JsonModel {
         this.version = version;
     }
 
+    public PluginInfo(JSONObject jsonObject) {
+        this(jsonObject.getString(NAME),
+            jsonObject.getString(VERSION));
+    }
 
     /**
      * This will create a JSONObject which represents the model
@@ -20,12 +25,23 @@ public class PluginInfo implements JsonModel {
     @Override
     public JSONObject getJSONObject() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", this.name);
-        jsonObject.put("version", this.version);
+        jsonObject.put(NAME, this.name);
+        jsonObject.put(VERSION, this.version);
 
         return jsonObject;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public boolean equals (PluginInfo other) {
+        return getName().equals(other.getName()) && getVersion().equals(other.getVersion());
+    }
 
     @Override
     public String toString() {

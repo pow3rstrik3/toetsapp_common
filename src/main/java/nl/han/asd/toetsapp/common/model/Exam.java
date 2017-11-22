@@ -7,27 +7,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Exam implements JsonModel {
-
+    private static final String ID = "id";
+    private static final String TITLE = "title";
+    private static final String EXAM_INFO = "examInfo";
+    private static final String QUESTIONS = "questions";
     private int id;
-	private ExamType examType;
-    private String name;
-    private String subject;
+    private String title;
+    private ExamInfo examInfo;
     private List<Question> questions;
 
-    public Exam(int id, ExamType examType, String name, String subject) {
+    public Exam(int id, String title, ExamInfo examInfo) {
         this.id = id;
-        this.examType = examType;
-        this.name = name;
-        this.subject = subject;
+        this.title = title;
+        this.examInfo = examInfo;
         this.questions = new ArrayList<>();
     }
 
+    public Exam(JSONObject jsonObject) {
+        this(jsonObject.getInt(ID),
+                jsonObject.getString(TITLE),
+                new ExamInfo(jsonObject.getJSONObject(EXAM_INFO)));
+        JSONArray jsonQuestions = jsonObject.getJSONArray(QUESTIONS);
+        for (int i = 0; i < jsonQuestions.length(); i++) {
+            questions.add(new Question(jsonQuestions.getJSONObject(i)));
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public ExamInfo getExamInfo() {
+        return examInfo;
+    }
 
     /**
      * A getter for the questions added to the exam
      * @return A list of questions
      */
-    public Question[] getQuestions() {
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    /**
+     * A getter for the questions added to the exam, converted to an array.
+     * @return An array of questions
+     */
+    public Question[] getQuestionsArray() {
         return questions.toArray(new Question[0]);
     }
 
@@ -49,15 +79,15 @@ public class Exam implements JsonModel {
     @Override
     public JSONObject getJSONObject() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("examType", examType.toString());
-        jsonObject.put("name", this.name);
-        jsonObject.put("subject", this.subject);
+        jsonObject.put(ID, id);
+        jsonObject.put(TITLE, title);
+        jsonObject.put(EXAM_INFO, examInfo.getJSONObject());
 
         JSONArray questionsJsonArray = new JSONArray();
         for (Question question : questions) {
             questionsJsonArray.put(question.getJSONObject());
         }
-        jsonObject.put("questions", questionsJsonArray);
+        jsonObject.put(QUESTIONS, questionsJsonArray);
 
         return jsonObject;
     }
@@ -67,10 +97,9 @@ public class Exam implements JsonModel {
     public String toString() {
         return "Exam{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", subject='" + subject + '\'' +
+                ", title='" + title + '\'' +
+                ", examInfo=" + examInfo +
                 ", questions=" + questions +
                 '}';
     }
-
 }

@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 public class QuestionTest {
     @Test
     public void getJSONObject() throws Exception {
-        int id = 5;
-        String title = "Test question";
-        String description = "This is a test.";
-        String questionType = "type";
-        String questionText = "What is a text?";
-        Question baseQuestion = new Question(id, title, description, questionType, questionText);
-        Question jsonQuestion = new Question(baseQuestion.getJSONObject());
+        final int id = 5;
+        final String title = "Test question";
+        final String description = "This is a test.";
+        final String questionType = "type";
+        final String questionText = "What is a test?";
+        final Question baseQuestion = new Question(id, title, description, questionType, questionText);
+        final Question jsonQuestion = new Question(baseQuestion.getJSONObject());
         assertEquals("Questions converted to JSON and back should keep the same id.", id, jsonQuestion.getId());
         assertEquals("Questions converted to JSON and back should keep the same title.", title, jsonQuestion.getTitle());
         assertEquals("Questions converted to JSON and back should keep the same description.", description, jsonQuestion.getDescription());
