@@ -3,18 +3,31 @@ package nl.han.asd.toetsapp.common.model;
 import org.json.JSONObject;
 
 public class Question implements JsonModel{
+	private static final String ID = "id";
+	private static final String TITLE = "title";
+	private static final String DESCRIPTION = "description";
+	private static final String QUESTION_TYPE = "questionType";
+	private static final String QUESTION_TEXT = "questionText";
 	private int id;
 	private String title;
 	private String description;
 	private String questionType;
 	private String questionText;
-	
+
+	public Question(int id, String title, String description, String questionType, String questionText) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.questionType = questionType;
+		this.questionText = questionText;
+	}
+
 	public Question(JSONObject jsonObject) {
-		this.id = jsonObject.getInt("id");
-		this.title = jsonObject.getString("title");
-		this.description = jsonObject.getString("description");
-		this.questionType = jsonObject.getString("questionType");
-		this.questionText = jsonObject.getString("questionText");
+		this(jsonObject.getInt(ID),
+			jsonObject.getString(TITLE),
+			jsonObject.getString(DESCRIPTION),
+			jsonObject.getString(QUESTION_TYPE),
+			jsonObject.getString(QUESTION_TEXT));
 	}
 	
 	public String getDescription() {
@@ -39,11 +52,11 @@ public class Question implements JsonModel{
 
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", this.id);
-        jsonObject.put("title", this.title);
-        jsonObject.put("description", this.description);
-        jsonObject.put("questionType", this.questionType);
-        jsonObject.put("questionText", this.questionText);
+        jsonObject.put(ID, this.id);
+        jsonObject.put(TITLE, this.title);
+        jsonObject.put(DESCRIPTION, this.description);
+        jsonObject.put(QUESTION_TYPE, this.questionType);
+        jsonObject.put(QUESTION_TEXT, this.questionText);
 		return jsonObject;
 	}
 	
