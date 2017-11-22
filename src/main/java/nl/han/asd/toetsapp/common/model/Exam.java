@@ -1,4 +1,4 @@
-package nl.han.asd.toetsapp.model;
+package nl.han.asd.toetsapp.common.model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
