@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subject implements JsonModel {
+public class Course implements JsonModel {
     private static final String CODE = "code";
     private static final String FULL_NAME = "fullName";
     private static final String EXAM_INFOS = "examInfos";
@@ -14,13 +14,13 @@ public class Subject implements JsonModel {
     private String fullName;
     private List<ExamInfo> examInfos;
 
-    public Subject(String code, String fullName) {
+    public Course(String code, String fullName) {
         this.code = code;
         this.fullName = fullName;
         this.examInfos = new ArrayList<>();
     }
 
-    public Subject(JSONObject jsonObject) {
+    public Course(JSONObject jsonObject) {
         this(jsonObject.getString(CODE),
                 jsonObject.getString(FULL_NAME));
         JSONArray examInfosArray = jsonObject.getJSONArray(EXAM_INFOS);

@@ -16,9 +16,7 @@ public class QuestionTest {
         final Question jsonQuestion = new Question(baseQuestion.getJSONObject());
         assertEquals("Questions converted to JSON and back should keep the same id.", id, jsonQuestion.getId());
         assertEquals("Questions converted to JSON and back should keep the same title.", title, jsonQuestion.getTitle());
-        assertEquals("Questions converted to JSON and back should keep the same description.", description, jsonQuestion.getDescription());
-        assertEquals("Questions converted to JSON and back should keep the same question type.", questionType, jsonQuestion.getQuestionType());
-        assertEquals("Questions converted to JSON and back should keep the same question text.", questionText, jsonQuestion.getQuestionText());
+        assertEquals("Questions converted to JSON and back should keep the same description.", description, jsonQuestion.getContext());
     }
 
 }

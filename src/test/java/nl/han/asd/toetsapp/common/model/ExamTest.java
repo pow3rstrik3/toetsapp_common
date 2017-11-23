@@ -10,8 +10,8 @@ public class ExamTest {
         final int id = 8;
         final String title = "Test Exam";
         final String version = "1-test";
-        final boolean isMock = false;
-        ExamInfo examInfo = new ExamInfo(id, version, title, isMock);
+        final ExamType examType = ExamType.EXAM;
+        ExamInfo examInfo = new ExamInfo(id, version, title, examType);
         Exam baseExam = new Exam(examInfo);
         Exam jsonExam = new Exam(baseExam.getJSONObject());
         assertTrue("Exam without questions converted to JSON and back should have no questions.", jsonExam.getQuestions().isEmpty());
@@ -23,8 +23,8 @@ public class ExamTest {
         final int id = 9;
         final String version = "1-test";
         final String title = "Test Exam 2";
-        final boolean isMock = false;
-        ExamInfo examInfo = new ExamInfo(id, version, title, isMock);
+        final ExamType examType = ExamType.EXAM;
+        ExamInfo examInfo = new ExamInfo(id, version, title, examType);
         Exam baseExam = new Exam(examInfo);
         final Question question1 = new Question(1, "First question", "This is the first question", "Test questions", "Is this the first question?");
         final Question question2 = new Question(2, "Second question", "This is the second question", "Test questions", "Is this the second question?");

@@ -11,19 +11,19 @@ public class ExamInfo implements JsonModel {
     private static final String ID = "id";
     private static final String TITLE = "title";
     private static final String VERSION = "version";
-    private static final String IS_MOCK = "isMock";
+    private static final String EXAM_TYPE = "examType";
     private static final String REQUIRED_PLUGINS = "requiredPlugins";
     private int id;
     private String version;
     private String title;
-    private boolean isMock;
+    private ExamType examType;
     private List<PluginInfo> requiredPlugins;
 
-    public ExamInfo(int id, String version, String title, boolean isMock) {
+    public ExamInfo(int id, String version, String title, ExamType examType) {
         this.id = id;
         this.version = version;
         this.title = title;
-        this.isMock = isMock;
+        this.examType = examType;
         this.requiredPlugins = new ArrayList<>();
     }
 
@@ -31,7 +31,7 @@ public class ExamInfo implements JsonModel {
         this(jsonObject.getInt(ID),
             jsonObject.getString(VERSION),
             jsonObject.getString(TITLE),
-            jsonObject.getBoolean(IS_MOCK));
+            ExamType.valueOf(jsonObject.getString(EXAM_TYPE)));
         JSONArray pluginInfos = jsonObject.getJSONArray(REQUIRED_PLUGINS);
         for (int i = 0; i < pluginInfos.length(); i++) {
             requiredPlugins.add(new PluginInfo(pluginInfos.getJSONObject(i)));
@@ -50,8 +50,12 @@ public class ExamInfo implements JsonModel {
         return title;
     }
 
+    public ExamType getExamType() {
+        return examType;
+    }
+
     public boolean isMock() {
-        return isMock;
+        return examType.isMock();
     }
 
     /**
@@ -82,7 +86,7 @@ public class ExamInfo implements JsonModel {
         jsonObject.put(ID, this.id);
         jsonObject.put(TITLE, this.title);
         jsonObject.put(VERSION, this.version);
-        jsonObject.put(IS_MOCK, this.isMock);
+        jsonObject.put(EXAM_TYPE, this.examType.toString());
 
         JSONArray requiredPluginsJsonArray = new JSONArray();
         for (PluginInfo pluginInfo : requiredPlugins) {
@@ -113,7 +117,7 @@ public class ExamInfo implements JsonModel {
                 "id='" + id + '\'' +
                 ", version='" + version + '\'' +
                 ", title='" + title + '\'' +
-                ", isMock=" + isMock +
+                ", examType=" + examType +
                 ", requiredPlugins=" + requiredPlugins +
                 '}';
     }

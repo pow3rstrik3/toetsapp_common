@@ -1,37 +1,48 @@
 package nl.han.asd.toetsapp.common.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Question implements JsonModel{
     private static final String ID = "id";
     private static final String TITLE = "title";
-    private static final String DESCRIPTION = "description";
-    private static final String QUESTION_TYPE = "questionType";
-    private static final String QUESTION_TEXT = "questionText";
+    private static final String CONTEXT = "context";
+    private static final String DEFINITION = "definition";
+    private static final String PLUGIN = "plugin";
+    private static final String SUBJECTS = "subjects";
     private int id;
     private String title;
-    private String description;
-    private String questionType;
-    private String questionText;
+    private String context;
+    private String definition;
+    private String plugin;
+    private List<String> subjects;
 
-    public Question(int id, String title, String description, String questionType, String questionText) {
+    public Question(int id, String title, String context, String definition, String plugin) {
         this.id = id;
         this.title = title;
-        this.description = description;
-        this.questionType = questionType;
-        this.questionText = questionText;
+        this.context = context;
+        this.definition = definition;
+        this.plugin = plugin;
+        this.subjects = new ArrayList<>();
     }
 
     public Question(JSONObject jsonObject) {
         this(jsonObject.getInt(ID),
             jsonObject.getString(TITLE),
-            jsonObject.getString(DESCRIPTION),
-            jsonObject.getString(QUESTION_TYPE),
-            jsonObject.getString(QUESTION_TEXT));
+            jsonObject.getString(CONTEXT),
+            jsonObject.getString(DEFINITION),
+            jsonObject.getString(PLUGIN));
+        JSONArray subjectArray = jsonObject.getJSONArray(SUBJECTS);
+        for (int i = 0; i < subjectArray.length(); i++) {
+            subjects.add(subjectArray.getString(i));
+        }
     }
 
-    public String getDescription() {
-        return description;
+    public String getContext() {
+        return context;
     }
 
     public int getId() {
@@ -42,36 +53,39 @@ public class Question implements JsonModel{
         return title;
     }
 
-    public String getQuestionType() {
-        return questionType;
+    public String getDefinition() {
+        return definition;
     }
 
-    public String getQuestionText() {
-        return questionText;
+    public String getPlugin() {
+        return plugin;
     }
 
     public JSONObject getJSONObject() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(ID, this.id);
         jsonObject.put(TITLE, this.title);
-        jsonObject.put(DESCRIPTION, this.description);
-        jsonObject.put(QUESTION_TYPE, this.questionType);
-        jsonObject.put(QUESTION_TEXT, this.questionText);
+        jsonObject.put(CONTEXT, this.context);
+        jsonObject.put(DEFINITION, this.definition);
+        jsonObject.put(PLUGIN, this.plugin);
+
+        JSONArray subjectsArray = new JSONArray();
+        for (String subject : subjects) {
+            subjectsArray.put(subject);
+        }
+        jsonObject.put(SUBJECTS, subjectsArray);
+
         return jsonObject;
     }
 
     public boolean equals (Question other) {
         return getId() == other.getId() &&
                 getTitle().equals(other.getTitle()) &&
-                getDescription().equals(other.getDescription()) &&
-                getQuestionType().equals(other.getQuestionType()) &&
-                getQuestionText().equals(other.getQuestionText());
+                getContext().equals(other.getContext()) &&
+                getDefinition().equals(other.getDefinition()) &&
+                getPlugin().equals(other.getPlugin());
     }
 
-    @Override
-    public String toString() {
-        return "Question [id=" + id + ", title=" + title + ", questionType=" + questionType + ", questionText="
-                + questionText + ", questionDescription=" + description + "]";
-    }
+
 
 }
