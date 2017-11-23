@@ -23,7 +23,6 @@
     </dependencies>
 
     <build>
-        <finalName>toetsapp-common</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
