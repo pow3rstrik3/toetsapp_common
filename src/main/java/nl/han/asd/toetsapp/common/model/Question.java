@@ -61,6 +61,18 @@ public class Question implements JsonModel{
         return plugin;
     }
 
+    public List<String> getSubjects() {
+        return subjects;
+    }
+
+    public void addSubject (String subject) {
+        subjects.add(subject);
+    }
+
+    public void removeSubject (String subject) {
+        subjects.remove(subject);
+    }
+
     public JSONObject getJSONObject() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(ID, this.id);
