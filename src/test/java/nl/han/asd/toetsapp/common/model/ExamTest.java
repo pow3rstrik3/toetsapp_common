@@ -27,7 +27,8 @@ public class ExamTest {
         final String version = "1-test";
         final String title = "Test Exam 2";
         final String subject = "SWA";
-        final boolean isMock = false;ExamInfo examInfo = new ExamInfo(id, version, title, subject, isMock);
+        final boolean isMock = false;
+        ExamInfo examInfo = new ExamInfo(id, version, title, subject, isMock);
         Exam baseExam = new Exam(id, title, examInfo);
         final Question question1 = new Question(1, "First question", "This is the first question", "Test questions", "Is this the first question?");
         final Question question2 = new Question(1, "Second question", "This is the second question", "Test questions", "Is this the second question?");
