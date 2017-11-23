@@ -7,38 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Exam implements JsonModel {
-    private static final String ID = "id";
-    private static final String TITLE = "title";
     private static final String EXAM_INFO = "examInfo";
     private static final String QUESTIONS = "questions";
-    private int id;
-    private String title;
     private ExamInfo examInfo;
     private List<Question> questions;
 
-    public Exam(int id, String title, ExamInfo examInfo) {
-        this.id = id;
-        this.title = title;
+    public Exam(ExamInfo examInfo) {
         this.examInfo = examInfo;
         this.questions = new ArrayList<>();
     }
 
     public Exam(JSONObject jsonObject) {
-        this(jsonObject.getInt(ID),
-                jsonObject.getString(TITLE),
-                new ExamInfo(jsonObject.getJSONObject(EXAM_INFO)));
+        this(new ExamInfo(jsonObject.getJSONObject(EXAM_INFO)));
         JSONArray jsonQuestions = jsonObject.getJSONArray(QUESTIONS);
         for (int i = 0; i < jsonQuestions.length(); i++) {
             questions.add(new Question(jsonQuestions.getJSONObject(i)));
         }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public ExamInfo getExamInfo() {
@@ -79,8 +63,6 @@ public class Exam implements JsonModel {
     @Override
     public JSONObject getJSONObject() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(ID, id);
-        jsonObject.put(TITLE, title);
         jsonObject.put(EXAM_INFO, examInfo.getJSONObject());
 
         JSONArray questionsJsonArray = new JSONArray();
@@ -96,8 +78,6 @@ public class Exam implements JsonModel {
     @Override
     public String toString() {
         return "Exam{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
                 ", examInfo=" + examInfo +
                 ", questions=" + questions +
                 '}';
