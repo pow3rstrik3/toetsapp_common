@@ -48,4 +48,4 @@ mvn test
 
 ## Contributing
 
-Zie [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) voor details over het bijdragen aan het common package.
+Zie CONTRIBUTING.md voor details over het bijdragen aan het common package.
