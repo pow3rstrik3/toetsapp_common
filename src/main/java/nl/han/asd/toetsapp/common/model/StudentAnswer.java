@@ -47,6 +47,21 @@ public class StudentAnswer implements JsonModel {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StudentAnswer that = (StudentAnswer) o;
+
+        return getPluginAnswer().equals(that.getPluginAnswer());
+    }
+
+    @Override
+    public int hashCode() {
+        return getPluginAnswer().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "AnswerKey{" +
                 "pluginAnswer='" + pluginAnswer + '\'' +
