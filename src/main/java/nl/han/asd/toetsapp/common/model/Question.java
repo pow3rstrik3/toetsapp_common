@@ -34,7 +34,6 @@ public class Question implements JsonModel{
         addSubject(subject);
     }
 
-    //TODO: Exception if no subject
     public Question(JSONObject jsonObject) {
         this(jsonObject.getInt(ID),
             jsonObject.getString(TITLE),
@@ -96,14 +95,29 @@ public class Question implements JsonModel{
         return jsonObject;
     }
 
-    public boolean equals (Question other) {
-        return getId() == other.getId() &&
-                getTitle().equals(other.getTitle()) &&
-                getContext().equals(other.getContext()) &&
-                getDefinition().equals(other.getDefinition()) &&
-                getPlugin().equals(other.getPlugin());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        if (getId() != question.getId()) return false;
+        if (!getTitle().equals(question.getTitle())) return false;
+        if (!getContext().equals(question.getContext())) return false;
+        if (!getDefinition().equals(question.getDefinition())) return false;
+        if (!getPlugin().equals(question.getPlugin())) return false;
+        return getSubjects().equals(question.getSubjects());
     }
 
-
-
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getTitle().hashCode();
+        result = 31 * result + getContext().hashCode();
+        result = 31 * result + getDefinition().hashCode();
+        result = 31 * result + getPlugin().hashCode();
+        result = 31 * result + getSubjects().hashCode();
+        return result;
+    }
 }

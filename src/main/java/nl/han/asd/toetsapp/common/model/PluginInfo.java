@@ -44,6 +44,24 @@ public class PluginInfo implements JsonModel {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PluginInfo that = (PluginInfo) o;
+
+        if (!getName().equals(that.getName())) return false;
+        return getVersion().equals(that.getVersion());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getVersion().hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "PluginInfo{" +
                 "name='" + name + '\'' +

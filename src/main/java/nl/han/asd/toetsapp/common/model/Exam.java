@@ -176,7 +176,10 @@ public class Exam implements JsonModel {
         if (!getTitle().equals(exam.getTitle())) return false;
         if (getExamType() != exam.getExamType()) return false;
         if (!getRequiredPlugins().equals(exam.getRequiredPlugins())) return false;
-        return getQuestions().equals(exam.getQuestions());
+        if (getQuestions() == null)
+            return exam.getQuestions() == null;
+        else
+            return getQuestions().equals(exam.getQuestions());
     }
 
     @Override
@@ -186,7 +189,8 @@ public class Exam implements JsonModel {
         result = 31 * result + getTitle().hashCode();
         result = 31 * result + getExamType().hashCode();
         result = 31 * result + getRequiredPlugins().hashCode();
-        result = 31 * result + getQuestions().hashCode();
+        if (getQuestions() != null)
+            result = 31 * result + getQuestions().hashCode();
         return result;
     }
 
