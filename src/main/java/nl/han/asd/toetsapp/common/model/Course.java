@@ -7,25 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course implements JsonModel {
+    //TODO: Add ID
     private static final String CODE = "code";
     private static final String FULL_NAME = "fullName";
-    private static final String EXAM_INFOS = "examInfos";
+    private static final String EXAM_INFOS = "exams";
     private String code;
     private String fullName;
-    private List<ExamInfo> examInfos;
+    private List<Exam> exams;
 
     public Course(String code, String fullName) {
         this.code = code;
         this.fullName = fullName;
-        this.examInfos = new ArrayList<>();
+        this.exams = new ArrayList<>();
     }
 
     public Course(JSONObject jsonObject) {
         this(jsonObject.getString(CODE),
                 jsonObject.getString(FULL_NAME));
-        JSONArray examInfosArray = jsonObject.getJSONArray(EXAM_INFOS);
-        for (int i = 0; i < examInfosArray.length(); i++) {
-            examInfos.add(new ExamInfo(examInfosArray.getJSONObject(i)));
+        JSONArray examsArray = jsonObject.getJSONArray(EXAM_INFOS);
+        for (int i = 0; i < examsArray.length(); i++) {
+            exams.add(new Exam(examsArray.getJSONObject(i)));
         }
     }
 
@@ -35,11 +36,11 @@ public class Course implements JsonModel {
         jsonObject.put(CODE, code);
         jsonObject.put(FULL_NAME, fullName);
 
-        JSONArray examInfosArray = new JSONArray();
-        for (ExamInfo examInfo : examInfos) {
-            examInfosArray.put(examInfo.getJSONObject());
+        JSONArray examArray = new JSONArray();
+        for (Exam examInfo : exams) {
+            examArray.put(examInfo.getJSONObject());
         }
-        jsonObject.put(EXAM_INFOS, examInfosArray);
+        jsonObject.put(EXAM_INFOS, examArray);
 
         return jsonObject;
     }
@@ -52,15 +53,15 @@ public class Course implements JsonModel {
         return fullName;
     }
 
-    public List<ExamInfo> getExamInfos() {
-        return examInfos;
+    public List<Exam> getExams() {
+        return exams;
     }
 
-    public void addExamInfo (ExamInfo examInfo) {
-        examInfos.add(examInfo);
+    public void addExam (Exam examInfo) {
+        exams.add(examInfo);
     }
 
-    public void removeExam (ExamInfo examInfo) {
-        examInfos.add(examInfo);
+    public void removeExam (Exam examInfo) {
+        exams.add(examInfo);
     }
 }

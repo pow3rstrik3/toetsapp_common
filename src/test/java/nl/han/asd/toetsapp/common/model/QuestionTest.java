@@ -5,20 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class QuestionTest {
-    @Test
-    public void getJSONObjectWithoutSubjects() throws Exception {
-        final int id = 5;
-        final String title = "Test question";
-        final String description = "This is a test.";
-        final String questionType = "type";
-        final String questionText = "What is a test?";
-        final Question baseQuestion = new Question(id, title, description, questionType, questionText);
-        final Question jsonQuestion = new Question(baseQuestion.getJSONObject());
-        assertEquals("Questions converted to JSON and back should keep the same id.", id, jsonQuestion.getId());
-        assertEquals("Questions converted to JSON and back should keep the same title.", title, jsonQuestion.getTitle());
-        assertEquals("Questions converted to JSON and back should keep the same description.", description, jsonQuestion.getContext());
-        assertTrue("Questions without subjects converted to JSON and back should have no subjects.", jsonQuestion.getSubjects().isEmpty());
-    }
 
     @Test
     public void getJSONObjectWithSubjects() throws Exception {
@@ -27,10 +13,9 @@ public class QuestionTest {
         final String description = "This is a test.";
         final String questionType = "type";
         final String questionText = "What is a test?";
-        final Question baseQuestion = new Question(id, title, description, questionType, questionText);
-        String subject1 = "Graphs";
-        String subject2 = "Dijkstra";
-        baseQuestion.addSubject(subject1);
+        final String subject1 = "Graphs";
+        final String subject2 = "Dijkstra";
+        final Question baseQuestion = new Question(id, title, description, questionType, questionText, subject1);
         baseQuestion.addSubject(subject2);
         final Question jsonQuestion = new Question(baseQuestion.getJSONObject());
         assertEquals("Questions converted to JSON and back should keep the same id.", id, jsonQuestion.getId());

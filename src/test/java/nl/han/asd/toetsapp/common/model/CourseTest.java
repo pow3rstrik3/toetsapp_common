@@ -14,24 +14,24 @@ public class CourseTest {
         final Course jsonCourse = new Course(baseCourse.getJSONObject());
         assertEquals("Course converted to JSON and back should keep the same code.", code, jsonCourse.getCode());
         assertEquals("Course converted to JSON and back should keep the same full name.", fullName, jsonCourse.getFullName());
-        assertTrue("Course without exam infos converted to JSON and back should have no exam information.", jsonCourse.getExamInfos().isEmpty());
+        assertTrue("Course without exam infos converted to JSON and back should have no exam information.", jsonCourse.getExams().isEmpty());
     }
 
     @Test
     public void getJSONObjectWithExams() throws Exception {
         final String code = "APP";
         final String fullName = "Software Architecture";
-        final ExamInfo examInfo1 = new ExamInfo(1, "1.0", "APP Exam 1", ExamType.EXAM);
-        final ExamInfo examInfo2 = new ExamInfo(2, "1.1", "APP Exam 2", ExamType.MOCKEXAM);
+        final Exam examInfo1 = new Exam(1, "1.0", "APP Exam 1", ExamType.EXAM, false);
+        final Exam examInfo2 = new Exam(2, "1.1", "APP Exam 2", ExamType.MOCKEXAM, false);
         final Course baseCourse = new Course(code, fullName);
-        baseCourse.addExamInfo(examInfo1);
-        baseCourse.addExamInfo(examInfo2);
+        baseCourse.addExam(examInfo1);
+        baseCourse.addExam(examInfo2);
         final Course jsonCourse = new Course(baseCourse.getJSONObject());
         assertEquals("Course converted to JSON and back should keep the same code.", code, jsonCourse.getCode());
         assertEquals("Course converted to JSON and back should keep the same full name.", fullName, jsonCourse.getFullName());
-        assertEquals("Course with two exam infos converted to JSON and back should still have two exam infos.", 2, jsonCourse.getExamInfos().size());
-        assertTrue("First exam info of copied Course should remain the same.", examInfo1.equals(jsonCourse.getExamInfos().get(0)));
-        assertTrue("Second exam info of copied Course should remain the same.", examInfo2.equals(jsonCourse.getExamInfos().get(1)));
+        assertEquals("Course with two exam infos converted to JSON and back should still have two exam infos.", 2, jsonCourse.getExams().size());
+        assertTrue("First exam info of copied Course should remain the same.", examInfo1.equals(jsonCourse.getExams().get(0)));
+        assertTrue("Second exam info of copied Course should remain the same.", examInfo2.equals(jsonCourse.getExams().get(1)));
     }
 
 }

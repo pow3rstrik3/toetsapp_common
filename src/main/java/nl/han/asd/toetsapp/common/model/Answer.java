@@ -3,6 +3,7 @@ package nl.han.asd.toetsapp.common.model;
 import org.json.JSONObject;
 
 public class Answer implements JsonModel {
+    //TODO: Rename
     private static final String PLUGIN_ANSWER = "pluginAnswer";
     private String pluginAnswer;
 

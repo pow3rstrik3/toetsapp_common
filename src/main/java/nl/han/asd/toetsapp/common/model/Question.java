@@ -20,7 +20,7 @@ public class Question implements JsonModel{
     private String plugin;
     private List<String> subjects;
 
-    public Question(int id, String title, String context, String definition, String plugin) {
+    private Question(int id, String title, String context, String definition, String plugin) {
         this.id = id;
         this.title = title;
         this.context = context;
@@ -29,6 +29,12 @@ public class Question implements JsonModel{
         this.subjects = new ArrayList<>();
     }
 
+    public Question(int id, String title, String context, String definition, String plugin, String subject) {
+        this(id, title, context, definition, plugin);
+        addSubject(subject);
+    }
+
+    //TODO: Exception if no subject
     public Question(JSONObject jsonObject) {
         this(jsonObject.getInt(ID),
             jsonObject.getString(TITLE),
