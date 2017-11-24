@@ -164,6 +164,11 @@ public class RequestHandler {
 
             sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, trustManagers, new SecureRandom());
+
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
         } catch (NoSuchAlgorithmException e) {
             logger.log(Level.WARNING, "RequestHandler NoSuchAlgorithmException", e);
         } catch (KeyManagementException e) {

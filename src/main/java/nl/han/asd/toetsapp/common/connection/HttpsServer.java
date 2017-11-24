@@ -7,9 +7,7 @@ import com.sun.net.httpserver.HttpsConfigurator;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.security.*;
 import java.security.cert.CertificateException;
@@ -154,7 +152,8 @@ public class HttpsServer implements HttpHandler {
                     // there is a response from the provider
                     String successResponse = p.request(
                             httpExchange.getRequestMethod(),
-                            splittedUrl.toArray(new String[0])
+                            splittedUrl.toArray(new String[0]),
+                            getHttpExchangeData(httpExchange)
                     );
 
                     if (successResponse != null) {
@@ -173,6 +172,29 @@ public class HttpsServer implements HttpHandler {
         // When there isn't a provider available
         httpExchange.sendResponseHeaders(404, notFoundError().length());
         return notFoundError();
+    }
+
+
+    /**
+     * Get optional POST or PUT data from the exchange
+     * @param httpExchange The exchange to get the input from
+     * @return A String with the send data
+     */
+    private String getHttpExchangeData(HttpExchange httpExchange) {
+        StringBuilder builder = new StringBuilder();
+        try {
+            InputStream input = new BufferedInputStream(httpExchange.getRequestBody());
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+            String temp = "";
+            while ((temp = buffer.readLine()) != null) {
+                builder.append(temp);
+            }
+            System.out.println(builder.toString());
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "IOException", e);
+        }
+
+        return builder.toString();
     }
 
 

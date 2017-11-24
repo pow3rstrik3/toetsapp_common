@@ -17,8 +17,9 @@ public interface Provider {
      * This needs to be implemented in a Provider to deliver a response message
      * @param requestType The type of request (for example GET, POST, PUT, DELETE)
      * @param parameters The parameters from the url
+     * @param data The input from the POST or the PUT method
      * @return A response string (the content for the web page)
      */
-    String request(String requestType, String[] parameters);
+    String request(String requestType, String[] parameters, String data);
 
 }
