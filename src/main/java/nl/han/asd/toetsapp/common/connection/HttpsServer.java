@@ -189,7 +189,6 @@ public class HttpsServer implements HttpHandler {
             while ((temp = buffer.readLine()) != null) {
                 builder.append(temp);
             }
-            System.out.println(builder.toString());
         } catch (IOException e) {
             logger.log(Level.SEVERE, "IOException", e);
         }
