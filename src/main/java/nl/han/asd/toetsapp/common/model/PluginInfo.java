@@ -8,11 +8,23 @@ public class PluginInfo implements JsonModel {
     private String name;
     private String version;
 
+    /**
+     * Empty constructor, required by some frameworks.
+     * Manual use of this constructor is not recommended.
+     */
+    public PluginInfo() {
+        this("untitled", "1.0");
+    }
+
     public PluginInfo(String name, String version) {
         this.name = name;
         this.version = version;
     }
 
+    /**
+     * Construct a PluginInfo from JSON.
+     * @param jsonObject A JSONObject
+     */
     public PluginInfo(JSONObject jsonObject) {
         this(jsonObject.getString(NAME),
             jsonObject.getString(VERSION));
@@ -37,6 +49,14 @@ public class PluginInfo implements JsonModel {
 
     public String getVersion() {
         return version;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public boolean equals (PluginInfo other) {

@@ -20,6 +20,14 @@ public class Question implements JsonModel{
     private String plugin;
     private List<String> subjects;
 
+    /**
+     * Empty constructor, required by some frameworks.
+     * Manual use of this constructor is not recommended.
+     */
+    public Question() {
+        this(0, "untitled", "", "none", "");
+    }
+
     private Question(int id, String title, String context, String definition, String plugin) {
         this.id = id;
         this.title = title;
@@ -34,6 +42,10 @@ public class Question implements JsonModel{
         addSubject(subject);
     }
 
+    /**
+     * Construct a Question from JSON.
+     * @param jsonObject A JSONObject
+     */
     public Question(JSONObject jsonObject) {
         this(jsonObject.getInt(ID),
             jsonObject.getString(TITLE),
@@ -76,6 +88,30 @@ public class Question implements JsonModel{
 
     public void removeSubject (String subject) {
         subjects.remove(subject);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    public void setDefinition(String definition) {
+        this.definition = definition;
+    }
+
+    public void setPlugin(String plugin) {
+        this.plugin = plugin;
+    }
+
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
     }
 
     public JSONObject getJSONObject() {

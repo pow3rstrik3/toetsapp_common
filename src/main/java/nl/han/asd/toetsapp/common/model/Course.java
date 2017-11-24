@@ -16,8 +16,12 @@ public class Course implements JsonModel {
     private String fullName;
     private List<Exam> exams;
 
+    /**
+     * Empty constructor, required by some frameworks.
+     * Manual use of this constructor is not recommended.
+     */
     public Course () {
-
+        this(0, "UNTITLED", "untitled");
     }
 
     public Course(int id, String code, String fullName) {

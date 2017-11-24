@@ -2,16 +2,27 @@ package nl.han.asd.toetsapp.common.model;
 
 import org.json.JSONObject;
 
-public class Answer implements JsonModel {
-    //TODO: Rename
+public class StudentAnswer implements JsonModel {
     private static final String PLUGIN_ANSWER = "pluginAnswer";
     private String pluginAnswer;
 
-    public Answer(String pluginAnswer) {
+    /**
+     * Empty constructor, required by some frameworks.
+     * Manual use of this constructor is not recommended.
+     */
+    public StudentAnswer() {
+        this("");
+    }
+
+    public StudentAnswer(String pluginAnswer) {
         this.pluginAnswer = pluginAnswer;
     }
 
-    public Answer(JSONObject jsonObject) {
+    /**
+     * Construct an AnswerKey from JSON.
+     * @param jsonObject A JSONObject
+     */
+    public StudentAnswer(JSONObject jsonObject) {
         this(jsonObject.getString(PLUGIN_ANSWER));
     }
 
@@ -31,9 +42,13 @@ public class Answer implements JsonModel {
         return pluginAnswer;
     }
 
+    public void setPluginAnswer(String pluginAnswer) {
+        this.pluginAnswer = pluginAnswer;
+    }
+
     @Override
     public String toString() {
-        return "Answer{" +
+        return "AnswerKey{" +
                 "pluginAnswer='" + pluginAnswer + '\'' +
                 '}';
     }
