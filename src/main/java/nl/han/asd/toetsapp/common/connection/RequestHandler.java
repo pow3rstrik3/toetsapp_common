@@ -37,7 +37,7 @@ public class RequestHandler {
      * @param path The path (For example /about)
      * @return A response from the server
      */
-    public String get(String path) {
+    public String get(String path) throws IOException {
         return this.request(path, "GET", null);
     }
 
@@ -48,7 +48,7 @@ public class RequestHandler {
      * @param data The data to send to the server
      * @return A response from the server
      */
-    public String post(String path, String data) {
+    public String post(String path, String data) throws IOException {
         return this.request(path, "POST", data);
     }
 
@@ -59,7 +59,7 @@ public class RequestHandler {
      * @param data The data to send to the server
      * @return A response from the server
      */
-    public String put(String path, String data) {
+    public String put(String path, String data) throws IOException {
         return this.request(path, "PUT", data);
     }
 
@@ -69,7 +69,7 @@ public class RequestHandler {
      * @param path The path (For example /about)
      * @return A response from the server
      */
-    public String delete(String path) {
+    public String delete(String path) throws IOException {
         return this.request(path, "DELETE", null);
     }
 
@@ -81,43 +81,39 @@ public class RequestHandler {
      * @param data The data to send to the server (nullable)
      * @return The response from the server
      */
-    private String request(String path, String method, String data) {
-        String response = "";
-        try {
-            HttpsURLConnection connection = (HttpsURLConnection) new URL(getUrl(path)).openConnection();
+    private String request(String path, String method, String data) throws IOException {
+        HttpsURLConnection connection = (HttpsURLConnection) new URL(getUrl(path)).openConnection();
 
-            if (trustAllCertificates && getSslUnsignedCertifcateManager() != null) {
-                HttpsURLConnection.setDefaultSSLSocketFactory(getSslUnsignedCertifcateManager());
-            }
-
-            if (data != null) {
-                connection.setDoOutput(true);
-            }
-
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestMethod(method);
-            connection.connect();
-
-            if (data != null) {
-                OutputStream out = connection.getOutputStream();
-                out.write(data.getBytes("UTF-8"));
-                out.flush();
-                out.close();
-            }
-
-            InputStream input = new BufferedInputStream(connection.getInputStream());
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
-            StringBuilder builder = new StringBuilder();
-            String temp = "";
-            while ((temp = buffer.readLine()) != null) {
-                builder.append(temp);
-            }
-            response = builder.toString();
-
-            connection.disconnect();
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "Connection error for request: " + getUrl(path), e);
+        if (trustAllCertificates && getSslUnsignedCertificateManager() != null) {
+            HttpsURLConnection.setDefaultSSLSocketFactory(getSslUnsignedCertificateManager());
         }
+
+        if (data != null) {
+            connection.setDoOutput(true);
+        }
+
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestMethod(method);
+        connection.connect();
+
+        if (data != null) {
+            OutputStream out = connection.getOutputStream();
+            out.write(data.getBytes("UTF-8"));
+            out.flush();
+            out.close();
+        }
+
+        InputStream input = new BufferedInputStream(connection.getInputStream());
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+        StringBuilder builder = new StringBuilder();
+        String temp = "";
+        while ((temp = buffer.readLine()) != null) {
+            builder.append(temp);
+        }
+
+        String response = builder.toString();
+
+        connection.disconnect();
 
         return response;
     }
@@ -142,7 +138,7 @@ public class RequestHandler {
      * This will generate an sslContext so all certificates will be trusted
      * @return A SSLSocketFactory
      */
-    private SSLSocketFactory getSslUnsignedCertifcateManager() {
+    private SSLSocketFactory getSslUnsignedCertificateManager() {
         SSLContext sslContext = null;
         try {
             TrustManager[] trustManagers = new TrustManager[] {

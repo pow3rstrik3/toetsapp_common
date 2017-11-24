@@ -11,9 +11,8 @@ public class HttpsServerTest {
 
         testServer.addProvider(new TestProvider());
 
-        while (true){
-
-        }
+//        while (true){
+//        }
     }
 
     @Test
