@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RequestHandler {
+
     private static final Logger logger = Logger.getLogger(RequestHandler.class.getName());
 
     private String host;
