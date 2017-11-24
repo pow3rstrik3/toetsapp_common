@@ -21,8 +21,8 @@ public class CourseTest {
     public void getJSONObjectWithExams() throws Exception {
         final String code = "APP";
         final String fullName = "Software Architecture";
-        final Exam examInfo1 = new Exam(1, "1.0", "APP Exam 1", ExamType.EXAM, false);
-        final Exam examInfo2 = new Exam(2, "1.1", "APP Exam 2", ExamType.MOCKEXAM, false);
+        final Exam examInfo1 = new Exam(1, "1.0", "APP Exam 1", ExamType.EXAM, 1485000000, 5400, "Test exam", "You can test this.", false);
+        final Exam examInfo2 = new Exam(2, "1.1", "APP Exam 2", ExamType.MOCKEXAM, 1485000000, 5400, "Test exam", "You can test this.", false);
         final Course baseCourse = new Course(code, fullName);
         baseCourse.addExam(examInfo1);
         baseCourse.addExam(examInfo2);

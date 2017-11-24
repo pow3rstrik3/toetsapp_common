@@ -7,11 +7,7 @@ import static org.junit.Assert.*;
 public class ExamTest {
     @Test
     public void getJSONExamInfoWithoutPlugins() throws Exception {
-        final int id = 8;
-        final String version = "1-test";
-        final String title = "Test Exam";
-        final ExamType examType = ExamType.EXAM;
-        final Exam baseExam = new Exam(id, version, title, examType, true);
+        final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.EXAM, 1485000000, 5400, "Test exam", "You can test this.", true);
         final Exam jsonExam = new Exam(baseExam.getJSONObject());
         assertTrue("Exam info converted to JSON and back should stay info-only.", jsonExam.isInfoOnly());
         assertFalse("Non-mock exam info converted to JSON and back should stay non-mock.", jsonExam.isMock());
@@ -23,13 +19,9 @@ public class ExamTest {
 
     @Test
     public void getJSONExamInfoWithPlugins() throws Exception {
-        final int id = 8;
-        final String version = "1-test";
-        final String title = "Test Exam";
-        final ExamType examType = ExamType.EXAM;
         final PluginInfo plugin1 = new PluginInfo("First plugin", "1");
         final PluginInfo plugin2 = new PluginInfo("Second plugin", "2");
-        final Exam baseExam = new Exam(id, version, title, examType, true);
+        final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.EXAM, 1485000000, 5400, "Test exam", "You can test this.", true);
         baseExam.addPlugin(plugin1);
         baseExam.addPlugin(plugin2);
         final Exam jsonExam = new Exam(baseExam.getJSONObject());
@@ -45,7 +37,7 @@ public class ExamTest {
 
     @Test
     public void getJSONExamWithoutQuestions() throws Exception {
-        final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.MOCKEXAM, false);
+        final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.MOCKEXAM, 1485000000, 5400, "Test exam", "You can test this.", false);
         final Exam jsonExam = new Exam(baseExam.getJSONObject());
         assertFalse("Exam converted to JSON and back should not be info-only.", jsonExam.isInfoOnly());
         assertTrue("Mock exam converted to JSON and back should stay mock.", jsonExam.isMock());
@@ -60,7 +52,7 @@ public class ExamTest {
     public void getJSONExamWithQuestions() throws Exception {
         final Question question1 = new Question(1, "First question", "This is the first question", "Test questions", "Is this the first question?", "Test questions");
         final Question question2 = new Question(2, "Second question", "This is the second question", "Test questions", "Is this the second question?", "Test questions");
-        final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.EXAM, false);
+        final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.EXAM, 1485000000, 5400, "Test exam", "You can test this.", false);
         baseExam.addQuestion(question1);
         baseExam.addQuestion(question2);
         final Exam jsonExam = new Exam(baseExam.getJSONObject());
