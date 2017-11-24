@@ -10,7 +10,6 @@ import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.security.*;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,9 +36,9 @@ public class HttpsServer implements HttpHandler {
      * @param keyStoreFile The path to the keystore file starting in the working directory
      * @param keyStorePassword The password for the given key store
      */
-    public void startServer(int port, String keyStoreFile, String keyStorePassword) {
-        com.sun.net.httpserver.HttpsServer server = null;
-        try {
+    public void startServer(int port, String keyStoreFile, String keyStorePassword)
+            throws IOException, GeneralSecurityException {
+            com.sun.net.httpserver.HttpsServer server = null;
             SSLContext sslContext = SSLContext.getInstance("TLS");
             initialiseKeyStore(keyStoreFile, keyStorePassword, sslContext);
 
@@ -50,11 +49,6 @@ public class HttpsServer implements HttpHandler {
             server.start();
 
             logger.log(Level.INFO, "HTTPS Server Started");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Start server IOException", e);
-        } catch (NoSuchAlgorithmException e) {
-            logger.log(Level.SEVERE, "Start server NoSuchAlgorithmException", e);
-        }
     }
 
 
@@ -64,31 +58,18 @@ public class HttpsServer implements HttpHandler {
      * @param password The password for the given key store
      * @param sslContext The SSL context to add the keystore to
      */
-    private void initialiseKeyStore(String keystoreFile, String password, SSLContext sslContext) {
-        try {
-            KeyStore keyStore = KeyStore.getInstance("JKS");
-            FileInputStream fileInputStream = new FileInputStream(keystoreFile);
-            keyStore.load(fileInputStream, password.toCharArray());
+    private void initialiseKeyStore(String keystoreFile, String password, SSLContext sslContext)
+            throws IOException, GeneralSecurityException {
+        KeyStore keyStore = KeyStore.getInstance("JKS");
+        FileInputStream fileInputStream = new FileInputStream(keystoreFile);
+        keyStore.load(fileInputStream, password.toCharArray());
 
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-            kmf.init(keyStore, password.toCharArray());
-            tmf.init(keyStore);
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+        kmf.init(keyStore, password.toCharArray());
+        tmf.init(keyStore);
 
-            sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), new SecureRandom());
-        } catch (KeyStoreException e) {
-            logger.log(Level.SEVERE, "KeyStoreException", e);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "IOException", e);
-        } catch (CertificateException e) {
-            logger.log(Level.SEVERE, "CertificateException", e);
-        } catch (NoSuchAlgorithmException e) {
-            logger.log(Level.SEVERE, "NoSuchAlgorithmException", e);
-        } catch (UnrecoverableKeyException e) {
-            logger.log(Level.SEVERE, "UnrecoverableKeyException", e);
-        } catch (KeyManagementException e) {
-            logger.log(Level.SEVERE, "KeyManagementException", e);
-        }
+        sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), new SecureRandom());
     }
 
 
