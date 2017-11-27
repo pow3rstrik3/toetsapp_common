@@ -82,7 +82,7 @@ public class Course implements JsonModel {
     }
 
     public void removeExam (Exam examInfo) {
-        exams.add(examInfo);
+        exams.remove(examInfo);
     }
 
     public void setId(int id) {
