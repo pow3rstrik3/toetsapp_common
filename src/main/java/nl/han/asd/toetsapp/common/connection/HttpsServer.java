@@ -39,17 +39,17 @@ public class HttpsServer implements HttpHandler {
      * @param keyStorePassword The password for the given key store
      */
     public void startServer(int port, String keyStoreFile, String keyStorePassword)
-            throws IOException, GeneralSecurityException {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            initialiseKeyStore(keyStoreFile, keyStorePassword, sslContext);
+        throws IOException, GeneralSecurityException {
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        initialiseKeyStore(keyStoreFile, keyStorePassword, sslContext);
 
-            server = com.sun.net.httpserver.HttpsServer.create(new InetSocketAddress(port), 0);
-            server.setHttpsConfigurator(new HttpsConfigurator(sslContext));
-            server.createContext("/", this);
-            server.setExecutor(null);
-            server.start();
-
-            logger.log(Level.INFO, "HTTPS Server Started");
+        server = com.sun.net.httpserver.HttpsServer.create(new InetSocketAddress(port), 0);
+        server.setHttpsConfigurator(new HttpsConfigurator(sslContext));
+        server.createContext("/", this);
+        server.setExecutor(null);
+        server.start();
+        
+        logger.log(Level.INFO, "HTTPS Server Started");
     }
 
 
