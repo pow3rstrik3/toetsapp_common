@@ -1,4 +1,4 @@
-package nl.han.asd.toetsapp.common.connection;
+package nl.han.asd.toetsapp.common.connection.client;
 
 import javax.net.ssl.*;
 import java.io.*;
