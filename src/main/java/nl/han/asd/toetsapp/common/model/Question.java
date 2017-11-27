@@ -10,13 +10,13 @@ public class Question implements JsonModel {
     private static final String ID = "id";
     private static final String TITLE = "title";
     private static final String CONTEXT = "context";
-    private static final String DEFINITION = "definition";
+    private static final String ASKED_QUESTION = "askedQuestion";
     private static final String PLUGIN = "plugin";
     private static final String SUBJECTS = "subjects";
     private int id;
     private String title;
     private String context;
-    private String definition;
+    private String askedQuestion;
     private PluginInfo plugin;
     private List<String> subjects;
 
@@ -28,17 +28,17 @@ public class Question implements JsonModel {
         this(0, "untitled", "", "none", new PluginInfo("no-plugin", "1.0"));
     }
 
-    private Question(int id, String title, String context, String definition, PluginInfo plugin) {
+    private Question(int id, String title, String context, String askedQuestion, PluginInfo plugin) {
         this.id = id;
         this.title = title;
         this.context = context;
-        this.definition = definition;
+        this.askedQuestion = askedQuestion;
         this.plugin = plugin;
         this.subjects = new ArrayList<>();
     }
 
-    public Question(int id, String title, String context, String definition, PluginInfo plugin, String subject) {
-        this(id, title, context, definition, plugin);
+    public Question(int id, String title, String context, String askedQuestion, PluginInfo plugin, String subject) {
+        this(id, title, context, askedQuestion, plugin);
         addSubject(subject);
     }
 
@@ -50,7 +50,7 @@ public class Question implements JsonModel {
         this(jsonObject.getInt(ID),
             jsonObject.getString(TITLE),
             jsonObject.getString(CONTEXT),
-            jsonObject.getString(DEFINITION),
+            jsonObject.getString(ASKED_QUESTION),
             new PluginInfo(jsonObject.getJSONObject(PLUGIN)));
         JSONArray subjectArray = jsonObject.getJSONArray(SUBJECTS);
         for (int i = 0; i < subjectArray.length(); i++) {
@@ -70,8 +70,8 @@ public class Question implements JsonModel {
         return title;
     }
 
-    public String getDefinition() {
-        return definition;
+    public String getAskedQuestion() {
+        return askedQuestion;
     }
 
     public PluginInfo getPlugin() {
@@ -102,8 +102,8 @@ public class Question implements JsonModel {
         this.context = context;
     }
 
-    public void setDefinition(String definition) {
-        this.definition = definition;
+    public void setAskedQuestion(String askedQuestion) {
+        this.askedQuestion = askedQuestion;
     }
 
     public void setPlugin(PluginInfo plugin) {
@@ -119,7 +119,7 @@ public class Question implements JsonModel {
         jsonObject.put(ID, this.id);
         jsonObject.put(TITLE, this.title);
         jsonObject.put(CONTEXT, this.context);
-        jsonObject.put(DEFINITION, this.definition);
+        jsonObject.put(ASKED_QUESTION, this.askedQuestion);
         jsonObject.put(PLUGIN, this.plugin.getJSONObject());
 
         JSONArray subjectsArray = new JSONArray();
@@ -141,7 +141,7 @@ public class Question implements JsonModel {
         if (getId() != question.getId()) return false;
         if (!getTitle().equals(question.getTitle())) return false;
         if (!getContext().equals(question.getContext())) return false;
-        if (!getDefinition().equals(question.getDefinition())) return false;
+        if (!getAskedQuestion().equals(question.getAskedQuestion())) return false;
         if (!getPlugin().equals(question.getPlugin())) return false;
         return getSubjects().equals(question.getSubjects());
     }
@@ -151,7 +151,7 @@ public class Question implements JsonModel {
         int result = getId();
         result = 31 * result + getTitle().hashCode();
         result = 31 * result + getContext().hashCode();
-        result = 31 * result + getDefinition().hashCode();
+        result = 31 * result + getAskedQuestion().hashCode();
         result = 31 * result + getPlugin().hashCode();
         result = 31 * result + getSubjects().hashCode();
         return result;
