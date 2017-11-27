@@ -6,7 +6,7 @@
 
     <groupId>nl.han.asd.toetsapp.common</groupId>
     <artifactId>toetsapp-common</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 
     <dependencies>
         <dependency>
