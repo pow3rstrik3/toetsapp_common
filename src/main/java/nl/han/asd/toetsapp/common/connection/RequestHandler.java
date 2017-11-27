@@ -75,13 +75,26 @@ public class RequestHandler {
 
 
     /**
-     * A general method for handling requests to the server
+     * A general method for handling requests to the server with a default content-Type
      * @param path The path (For example /about)
      * @param method The method header to send (For example GET, POST, PUT, DELETE)
      * @param data The data to send to the server (nullable)
      * @return The response from the server
      */
     private String request(String path, String method, String data) throws IOException {
+        return request(path, method, data, "application/json");
+    }
+
+
+    /**
+     * A general method for handling requests to the server
+     * @param path The path (For example /about)
+     * @param method The method header to send (For example GET, POST, PUT, DELETE)
+     * @param data The data to send to the server (nullable)
+     * @param contentType The header for the contentType
+     * @return The response from the server
+     */
+    public String request(String path, String method, String data, String contentType) throws IOException {
         HttpsURLConnection connection = (HttpsURLConnection) new URL(getUrl(path)).openConnection();
 
         if (trustAllCertificates && getSslUnsignedCertificateManager() != null) {
@@ -92,7 +105,7 @@ public class RequestHandler {
             connection.setDoOutput(true);
         }
 
-        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Content-Type", contentType);
         connection.setRequestMethod(method);
         connection.connect();
 
