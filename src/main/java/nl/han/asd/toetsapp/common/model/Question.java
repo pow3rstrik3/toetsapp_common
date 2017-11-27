@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Question implements JsonModel{
+public class Question implements JsonModel {
     private static final String ID = "id";
     private static final String TITLE = "title";
     private static final String CONTEXT = "context";
@@ -17,7 +17,7 @@ public class Question implements JsonModel{
     private String title;
     private String context;
     private String definition;
-    private String plugin;
+    private PluginInfo plugin;
     private List<String> subjects;
 
     /**
@@ -25,10 +25,10 @@ public class Question implements JsonModel{
      * Manual use of this constructor is not recommended.
      */
     public Question() {
-        this(0, "untitled", "", "none", "");
+        this(0, "untitled", "", "none", new PluginInfo("no-plugin", "1.0"));
     }
 
-    private Question(int id, String title, String context, String definition, String plugin) {
+    private Question(int id, String title, String context, String definition, PluginInfo plugin) {
         this.id = id;
         this.title = title;
         this.context = context;
@@ -37,7 +37,7 @@ public class Question implements JsonModel{
         this.subjects = new ArrayList<>();
     }
 
-    public Question(int id, String title, String context, String definition, String plugin, String subject) {
+    public Question(int id, String title, String context, String definition, PluginInfo plugin, String subject) {
         this(id, title, context, definition, plugin);
         addSubject(subject);
     }
@@ -51,7 +51,7 @@ public class Question implements JsonModel{
             jsonObject.getString(TITLE),
             jsonObject.getString(CONTEXT),
             jsonObject.getString(DEFINITION),
-            jsonObject.getString(PLUGIN));
+            new PluginInfo(jsonObject.getJSONObject(PLUGIN)));
         JSONArray subjectArray = jsonObject.getJSONArray(SUBJECTS);
         for (int i = 0; i < subjectArray.length(); i++) {
             subjects.add(subjectArray.getString(i));
@@ -74,7 +74,7 @@ public class Question implements JsonModel{
         return definition;
     }
 
-    public String getPlugin() {
+    public PluginInfo getPlugin() {
         return plugin;
     }
 
@@ -106,7 +106,7 @@ public class Question implements JsonModel{
         this.definition = definition;
     }
 
-    public void setPlugin(String plugin) {
+    public void setPlugin(PluginInfo plugin) {
         this.plugin = plugin;
     }
 
@@ -120,7 +120,7 @@ public class Question implements JsonModel{
         jsonObject.put(TITLE, this.title);
         jsonObject.put(CONTEXT, this.context);
         jsonObject.put(DEFINITION, this.definition);
-        jsonObject.put(PLUGIN, this.plugin);
+        jsonObject.put(PLUGIN, this.plugin.getJSONObject());
 
         JSONArray subjectsArray = new JSONArray();
         for (String subject : subjects) {

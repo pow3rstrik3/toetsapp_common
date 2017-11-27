@@ -50,8 +50,9 @@ public class ExamTest {
 
     @Test
     public void getJSONExamWithQuestions() throws Exception {
-        final Question question1 = new Question(1, "First question", "This is the first question", "Test questions", "Is this the first question?", "Test questions");
-        final Question question2 = new Question(2, "Second question", "This is the second question", "Test questions", "Is this the second question?", "Test questions");
+        PluginInfo plugin = new PluginInfo("test-plug", "1.0");
+        final Question question1 = new Question(1, "First question", "This is the first question", "Is this the first question?", plugin, "Test questions");
+        final Question question2 = new Question(2, "Second question", "This is the second question", "Is this the second question?", plugin, "Test questions");
         final Exam baseExam = new Exam(8, "1-test", "Test Exam", ExamType.EXAM, 1485000000, 5400, "Test exam", "You can test this.", false);
         baseExam.addQuestion(question1);
         baseExam.addQuestion(question2);

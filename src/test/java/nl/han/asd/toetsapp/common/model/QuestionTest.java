@@ -10,7 +10,8 @@ public class QuestionTest {
     public void getJSONObjectWithSubjects() throws Exception {
         final String subject1 = "Graphs";
         final String subject2 = "Dijkstra";
-        final Question baseQuestion = new Question(5, "Test question", "This is a test", "What is a test?", "plugin", subject1);
+        PluginInfo plugin = new PluginInfo("test-plugin", "1.0");
+        final Question baseQuestion = new Question(5, "Test question", "This is a test", "What is a test?", plugin, subject1);
         baseQuestion.addSubject(subject2);
         final Question jsonQuestion = new Question(baseQuestion.getJSONObject());
         assertEquals("Questions with two subjects converted to JSON and back should still have two subjects.", 2, jsonQuestion.getSubjects().size());
