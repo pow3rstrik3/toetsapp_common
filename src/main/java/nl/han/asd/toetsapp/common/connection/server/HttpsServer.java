@@ -1,4 +1,4 @@
-package nl.han.asd.toetsapp.common.connection;
+package nl.han.asd.toetsapp.common.connection.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -48,7 +48,7 @@ public class HttpsServer implements HttpHandler {
         server.createContext("/", this);
         server.setExecutor(null);
         server.start();
-        
+
         logger.log(Level.INFO, "HTTPS Server Started");
     }
 

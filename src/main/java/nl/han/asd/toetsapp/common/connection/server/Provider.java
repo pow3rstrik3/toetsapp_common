@@ -1,4 +1,4 @@
-package nl.han.asd.toetsapp.common.connection;
+package nl.han.asd.toetsapp.common.connection.server;
 
 public interface Provider {
 
