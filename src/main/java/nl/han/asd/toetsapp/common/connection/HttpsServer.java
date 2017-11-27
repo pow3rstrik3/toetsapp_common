@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 public class HttpsServer implements HttpHandler {
 
     private List<Provider> providers;
+    private com.sun.net.httpserver.HttpsServer server = null;
+
     private static final Logger logger = Logger.getLogger(HttpsServer.class.getName());
 
     /**
@@ -38,7 +40,6 @@ public class HttpsServer implements HttpHandler {
      */
     public void startServer(int port, String keyStoreFile, String keyStorePassword)
             throws IOException, GeneralSecurityException {
-            com.sun.net.httpserver.HttpsServer server = null;
             SSLContext sslContext = SSLContext.getInstance("TLS");
             initialiseKeyStore(keyStoreFile, keyStorePassword, sslContext);
 
@@ -49,6 +50,23 @@ public class HttpsServer implements HttpHandler {
             server.start();
 
             logger.log(Level.INFO, "HTTPS Server Started");
+    }
+
+
+    /**
+     * Stop the server with a default delay of 1 second
+     */
+    public void stopServer() {
+        stopServer(1);
+    }
+
+
+    /**
+     * Stop the server with a given delay before stopping
+     * @param delay The time to handle running requests
+     */
+    public void stopServer(int delay) {
+        server.stop(delay);
     }
 
 
